@@ -1030,6 +1030,20 @@ place-items:center;
 border-radius:50%;
 background:var(--green);
 color:#fff}
+.summaryback{
+position:absolute;
+z-index:7;
+right:4%;
+bottom:18px;
+min-height:39px;
+padding:0 14px;
+border:1px solid #afcdbb;
+background:#fff;
+color:var(--green);
+font:inherit;
+font-size:14px;
+font-weight:800;
+cursor:pointer}
 @media(max-width:560px){
 .reveal h1{
 font-size:clamp(53px,17.85vw,84px)}
@@ -1630,6 +1644,9 @@ const c=candidates[index],
 dots=candidates.map((x,
 i)=>`<button class="${i===index?'on':i<index?'past':''}" ${playing?'disabled':''} data-index="${i}"><span>${i+1}</span><i></i></button>`).join(''),
 hint=index<pickCount-1?'クリックして次の指名へ':'クリックして指名一覧へ';
+$('#revealHost').innerHTML=`<div class="reveal ${playing?'manual':''}" ${playing?'role="button" tabindex="0"':''} key="${sequence}-${index}"><div class="topline"></div><div class="meta"><p class="org">${orgName(c)}</p></div><div class="live" role="img" aria-label="LIVE"></div><h1>${c.name.trim()}</h1><div class="revealteam"><span class="reveallogo" style="--scale:${team[6]*2}"><img src="${team[5]}" alt=""></span></div><div class="track">${dots}</div>${playing?`<div class="clicknext">${hint} <b>→</b></div>`:'<button type="button" class="summaryback">選手一覧に戻る</button>'}</div>`;
+const summaryBack=$('.summaryback');
+if(summaryBack)summaryBack.onclick=renderSummary;
 $('#revealHost').innerHTML=`<div class="reveal ${playing?'manual':''}" ${playing?'role="button" tabindex="0"':''} key="${sequence}-${index}"><div class="topline"></div><div class="meta"><p class="org">${orgName(c)}</p></div><div class="live" role="img" aria-label="LIVE"></div><h1>${c.name.trim()}</h1><div class="revealteam"><span class="reveallogo" style="--scale:${team[6]*2}"><img src="${team[5]}" alt=""></span></div><div class="track">${dots}</div>${playing?`<div class="clicknext">${hint} <b>→</b></div>`:''}</div>`;
 $$('.track button').forEach(b=>b.onclick=()=>{
 if(!playing){
